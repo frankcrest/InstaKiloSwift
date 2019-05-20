@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol CustomCellDelegate {
+  func didTapCell(imageName:String)
+}
+
 class CustomCell: UICollectionViewCell {
   
   let imageView : UIImageView = {
@@ -16,6 +20,8 @@ class CustomCell: UICollectionViewCell {
     imageView.contentMode = .scaleAspectFit
     return imageView
   }()
+  
+  var delegate: CustomCellDelegate?
   
   override init(frame: CGRect) {
     super.init(frame: frame)

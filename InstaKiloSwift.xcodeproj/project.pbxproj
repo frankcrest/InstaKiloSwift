@@ -14,6 +14,7 @@
 		E972B88E2293337F0042F1DE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E972B88C2293337F0042F1DE /* LaunchScreen.storyboard */; };
 		E9E22AB32293375800C61ECF /* CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E22AB22293375800C61ECF /* CustomCell.swift */; };
 		E9E22AB522933BC700C61ECF /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E22AB422933BC700C61ECF /* HeaderView.swift */; };
+		E9E22AB72293477E00C61ECF /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E22AB62293477E00C61ECF /* DetailViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		E972B88F2293337F0042F1DE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E9E22AB22293375800C61ECF /* CustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCell.swift; sourceTree = "<group>"; };
 		E9E22AB422933BC700C61ECF /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
+		E9E22AB62293477E00C61ECF /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +62,7 @@
 			children = (
 				E972B8832293337D0042F1DE /* AppDelegate.swift */,
 				E972B8852293337D0042F1DE /* ViewController.swift */,
+				E9E22AB62293477E00C61ECF /* DetailViewController.swift */,
 				E9E22AB422933BC700C61ECF /* HeaderView.swift */,
 				E9E22AB22293375800C61ECF /* CustomCell.swift */,
 				E972B8872293337D0042F1DE /* Main.storyboard */,
@@ -143,6 +146,7 @@
 			files = (
 				E972B8862293337D0042F1DE /* ViewController.swift in Sources */,
 				E9E22AB32293375800C61ECF /* CustomCell.swift in Sources */,
+				E9E22AB72293477E00C61ECF /* DetailViewController.swift in Sources */,
 				E972B8842293337D0042F1DE /* AppDelegate.swift in Sources */,
 				E9E22AB522933BC700C61ECF /* HeaderView.swift in Sources */,
 			);

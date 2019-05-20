@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, CustomCellDelegate, DetailViewDelegate{
   
   let collectionView : UICollectionView = {
     let flowLayout = UICollectionViewFlowLayout()
@@ -25,6 +25,8 @@ class ViewController: UIViewController {
     segmentControl.isUserInteractionEnabled = true
     return segmentControl
   }()
+  
+  var deletePhotoIndexPath : IndexPath?
   
   let subject1 = ["image1", "image2", "image3"]
   let subject2 = ["image4", "image5", "image6"]
@@ -69,30 +71,71 @@ class ViewController: UIViewController {
     }
   }
   
+  func didTapCell(imageName: String) {
+    let detailVC = DetailViewController()
+    detailVC.delegate = self
+    detailVC.imageName = imageName
+    self.present(detailVC, animated: true, completion: nil)
+  }
+  
+  func deleteTapped(imageName: String) {
+    var section:Int?
+    var row:Int?
+    for names in self.selectedNameArray{
+      if names.contains(imageName){
+        let sectionIndex = self.selectedNameArray.firstIndex(of: names)
+        if let sectionIndex = sectionIndex{
+          section = sectionIndex
+        }
+      }
+      for name in names{
+        if name == imageName{
+          let rowIndex = names.firstIndex(of: name)
+          if let rowIndex = rowIndex{
+            row = rowIndex
+          }
+        }
+      }
+    }
+    
+    if row != nil && section != nil {
+      self.deletePhotoIndexPath = IndexPath(row: row!, section: section!)
+      if let indexPath = self.deletePhotoIndexPath{
+        var arrayForChange = self.selectedNameArray[indexPath.section]
+        arrayForChange.remove(at: indexPath.row)
+        self.selectedNameArray[indexPath.section] = arrayForChange
+        self.collectionView.reloadData()
+      }
+    }
+  }
 }
-
-extension ViewController:UICollectionViewDelegate{
   
-}
-
-extension ViewController:UICollectionViewDataSource{
-  func numberOfSections(in collectionView: UICollectionView) -> Int {
-    return selectedNameArray.count
+  
+  extension ViewController:UICollectionViewDelegate{
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+      didTapCell(imageName: self.selectedNameArray[indexPath.section][indexPath.row])
+    }
   }
   
-  func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    return selectedNameArray[section].count
-  }
-  
-  func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "customCell", for: indexPath) as! CustomCell
-    cell.backgroundColor = .red
-    cell.imageView.image = UIImage.init(named: self.selectedNameArray[indexPath.section][indexPath.row])
-    return cell
-  }
-  
-  func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-    let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "headerView", for: indexPath) as! HeaderView
+  extension ViewController:UICollectionViewDataSource{
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+      return selectedNameArray.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+      return selectedNameArray[section].count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+      let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "customCell", for: indexPath) as! CustomCell
+      cell.delegate = self
+      cell.backgroundColor = .red
+      cell.imageView.image = UIImage.init(named: self.selectedNameArray[indexPath.section][indexPath.row])
+      return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+      let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "headerView", for: indexPath) as! HeaderView
     headerView.label.text = self.headerTitle[indexPath.section]
     return headerView
   }
