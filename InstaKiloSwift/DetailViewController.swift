@@ -29,6 +29,15 @@ class DetailViewController: UIViewController {
     button.backgroundColor = .black
     return button
   }()
+
+  let buttonToDismiss : UIButton = {
+    let button = UIButton(frame:CGRect.zero)
+    button.setTitle("go back", for: .normal)
+    button.translatesAutoresizingMaskIntoConstraints = false
+    button.titleLabel?.font = .systemFont(ofSize: 20)
+    button.backgroundColor = .black
+    return button
+  }()
   
   var imageName:String?
   
@@ -40,6 +49,7 @@ class DetailViewController: UIViewController {
     setupView()
     
     button.addTarget(self, action: #selector(handleTap), for: .touchUpInside)
+    buttonToDismiss.addTarget(self, action: #selector(handelDismiss), for: .touchUpInside)
     setupImage()
     
   }
@@ -47,7 +57,7 @@ class DetailViewController: UIViewController {
   func setupView(){
     self.view.backgroundColor = .white
     self.view.addSubview(imageView)
-    
+    self.view.addSubview(buttonToDismiss)
     self.view.addSubview(button)
     
     NSLayoutConstraint.activate([
@@ -55,7 +65,12 @@ class DetailViewController: UIViewController {
       imageView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 0),
       imageView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: 0),
       
-      button.topAnchor.constraint(equalTo: self.imageView.bottomAnchor, constant: 0),
+      buttonToDismiss.topAnchor.constraint(equalTo: self.imageView.bottomAnchor, constant: 0),
+      buttonToDismiss.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 0),
+      buttonToDismiss.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: 0),
+      buttonToDismiss.heightAnchor.constraint(equalToConstant: 40),
+      
+      button.topAnchor.constraint(equalTo: self.buttonToDismiss.bottomAnchor, constant: 0),
       button.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 0),
       button.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: 0),
       button.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 0),
@@ -73,6 +88,10 @@ class DetailViewController: UIViewController {
     if let imageName = self.imageName{
       self.delegate?.deleteTapped(imageName: imageName)
     }
+    self.dismiss(animated: true, completion: nil)
+  }
+  
+  @objc func handelDismiss(){
     self.dismiss(animated: true, completion: nil)
   }
   

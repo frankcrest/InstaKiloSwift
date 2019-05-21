@@ -27,6 +27,7 @@ class ViewController: UIViewController, CustomCellDelegate, DetailViewDelegate{
   }()
   
   var deletePhotoIndexPath : IndexPath?
+  var deletePhotoIndexPath2 : IndexPath?
   
   let subject1 = ["image1", "image2", "image3"]
   let subject2 = ["image4", "image5", "image6"]
@@ -81,9 +82,11 @@ class ViewController: UIViewController, CustomCellDelegate, DetailViewDelegate{
   func deleteTapped(imageName: String) {
     var section:Int?
     var row:Int?
-    for names in self.selectedNameArray{
+    var section1:Int?
+    var row1:Int?
+    for names in self.imageNameArray{
       if names.contains(imageName){
-        let sectionIndex = self.selectedNameArray.firstIndex(of: names)
+        let sectionIndex = self.imageNameArray.firstIndex(of: names)
         if let sectionIndex = sectionIndex{
           section = sectionIndex
         }
@@ -98,12 +101,39 @@ class ViewController: UIViewController, CustomCellDelegate, DetailViewDelegate{
       }
     }
     
-    if row != nil && section != nil {
+    for names in self.imageNameArrayReverse{
+      if names.contains(imageName){
+        let sectionIndex = self.imageNameArrayReverse.firstIndex(of: names)
+        if let sectionIndex = sectionIndex{
+          section1 = sectionIndex
+        }
+      }
+      for name in names{
+        if name == imageName{
+          let rowIndex = names.firstIndex(of: name)
+          if let rowIndex = rowIndex{
+            row1 = rowIndex
+          }
+        }
+      }
+    }
+    
+    if row != nil && section != nil && section1 != nil && row1 != nil {
+      self.deletePhotoIndexPath2 = IndexPath(row: row1!, section: section1!)
       self.deletePhotoIndexPath = IndexPath(row: row!, section: section!)
-      if let indexPath = self.deletePhotoIndexPath{
-        var arrayForChange = self.selectedNameArray[indexPath.section]
+      if let indexPath = self.deletePhotoIndexPath, let indexPath2 = self.deletePhotoIndexPath2{
+        var arrayForChange = self.imageNameArray[indexPath.section]
         arrayForChange.remove(at: indexPath.row)
-        self.selectedNameArray[indexPath.section] = arrayForChange
+        self.imageNameArray[indexPath.section] = arrayForChange
+        var arrayForChange2 = self.imageNameArrayReverse[indexPath2.section]
+        arrayForChange2.remove(at: indexPath2.row)
+        self.imageNameArrayReverse[indexPath2.section] = arrayForChange2
+      }
+      if segmentControl.selectedSegmentIndex == 0{
+        self.selectedNameArray = imageNameArray
+        self.collectionView.reloadData()
+      } else if segmentControl.selectedSegmentIndex == 1{
+        self.selectedNameArray = imageNameArrayReverse
         self.collectionView.reloadData()
       }
     }
