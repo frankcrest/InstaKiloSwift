@@ -182,5 +182,7 @@ extension ViewController:UICollectionViewDelegateFlowLayout{
     return CGSize(width: self.collectionView.frame.width, height: 30)
   }
   
+  //use enum to add property to photo object, use that to filter
+  //change the enum property of specific photo
 }
 
