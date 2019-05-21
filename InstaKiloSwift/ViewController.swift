@@ -76,6 +76,7 @@ class ViewController: UIViewController, CustomCellDelegate, DetailViewDelegate{
     let detailVC = DetailViewController()
     detailVC.delegate = self
     detailVC.imageName = imageName
+    detailVC.imageNames = self.selectedNameArray
     self.present(detailVC, animated: true, completion: nil)
   }
   
